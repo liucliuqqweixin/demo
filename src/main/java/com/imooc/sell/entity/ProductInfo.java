@@ -1,12 +1,14 @@
 package com.imooc.sell.entity;
 
 import java.math.BigDecimal;
-import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
 
-import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.*;
+
+import java.time.LocalDateTime;
+
+import java.io.Serializable;
+import java.util.Date;
+
 import com.imooc.sell.enums.StateEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -49,16 +51,18 @@ public class ProductInfo implements Serializable {
     private String productIcon;
 
     @ApiModelProperty(value = "商品状态,0正常1下架")
-    private Integer productStatus;
+    private StateEnum productStatus;
 
     @ApiModelProperty(value = "类目编号")
     private Integer categoryType;
 
     @ApiModelProperty(value = "创建时间")
-    private LocalDateTime createTime;
+    @TableField(fill = FieldFill.INSERT)
+    private Date createTime;
 
     @ApiModelProperty(value = "修改时间")
-    private LocalDateTime updateTime;
+    @TableField(fill = FieldFill.UPDATE)
+    private Date updateTime;
     @TableLogic
     private StateEnum del;
 

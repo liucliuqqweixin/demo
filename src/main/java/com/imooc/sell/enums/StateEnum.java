@@ -6,8 +6,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.io.Serializable;
 
 public enum StateEnum implements IEnum {
-    DELETE(1,"未在售"),
-    NO_DELETE(0,"在售");
+    OBTAINED(1, "下架"),
+    NORMAL(0, "正常");
     private Integer code;
     private String msg;
 
@@ -20,6 +20,7 @@ public enum StateEnum implements IEnum {
     public Serializable getValue() {
         return this.code;
     }
+
     @JsonValue
     public String getMsg() {
         return msg;

@@ -1,11 +1,12 @@
 package com.imooc.sell.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
 
-import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.imooc.sell.enums.StateEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -24,7 +25,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="ProductCategory对象", description="类目表")
+@ApiModel(value = "ProductCategory对象", description = "类目表")
 public class ProductCategory implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,11 +40,14 @@ public class ProductCategory implements Serializable {
     private Integer categoryType;
 
     @ApiModelProperty(value = "创建时间")
-    private LocalDateTime createTime;
+    @TableField(fill = FieldFill.INSERT)
+    private Date createTime;
 
     @ApiModelProperty(value = "修改时间")
-    private LocalDateTime updateTime;
+    @TableField(fill = FieldFill.UPDATE)
+    private Date updateTime;
     @TableLogic
+    @JsonIgnore
     private StateEnum del;
 
 

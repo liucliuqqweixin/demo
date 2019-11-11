@@ -3,9 +3,13 @@ package com.imooc.sell.controller;
 
 import com.imooc.sell.common.VO.Result;
 import com.imooc.sell.common.form.Page;
+import com.imooc.sell.common.form.ProductCategoryForm;
 import com.imooc.sell.entity.OrderMaster;
 import com.imooc.sell.entity.ProductCategory;
+import com.imooc.sell.service.IProductCategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -19,12 +23,19 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2019-11-10
  */
 @RestController
-@RequestMapping("/product-category")
-public class ProductCategoryController implements BaseController<ProductCategory,String>{
+@RequestMapping("/productCategory")
+public class ProductCategoryController implements BaseController<ProductCategory, String> {
+    @Autowired
+    private IProductCategoryService iProductCategoryService;
 
     @Override
     public Result list(ProductCategory productCategory, Page page) {
         return null;
+    }
+    @GetMapping("/list")
+    public Result listPage(ProductCategoryForm productCategory, Page page) {
+
+        return iProductCategoryService.listPage(productCategory,page);
     }
 
     @Override

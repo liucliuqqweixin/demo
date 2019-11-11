@@ -6,12 +6,14 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.imooc.sell.entity.OrderDetail;
 import com.imooc.sell.util.JsonUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
+@Slf4j
 class OrderDetailMapperTest {
     @Autowired
     private OrderDetailMapper orderDetailMapper;
@@ -32,6 +34,15 @@ class OrderDetailMapperTest {
         page.setCurrent(1L);
         page.setSize(2);
         System.out.println(JsonUtil.toJson(orderDetailMapper.selectPage(page, null)));
+    }
+    @Test
+    void  test3(){
+        log.info("info.....................................");
+        log.info("info.....................................");
+        log.warn("warn.....................................");
+        log.warn("warn.....................................");
+        log.error("error....................................");
+        log.error("error....................................");
     }
 
 }

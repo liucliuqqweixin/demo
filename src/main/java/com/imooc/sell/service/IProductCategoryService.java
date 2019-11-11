@@ -1,5 +1,8 @@
 package com.imooc.sell.service;
 
+import com.imooc.sell.common.VO.Result;
+import com.imooc.sell.common.form.Page;
+import com.imooc.sell.common.form.ProductCategoryForm;
 import com.imooc.sell.entity.ProductCategory;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -12,5 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2019-11-10
  */
 public interface IProductCategoryService extends IService<ProductCategory> {
-
+    Result listPage(ProductCategoryForm productCategoryForm, Page page);
 }
