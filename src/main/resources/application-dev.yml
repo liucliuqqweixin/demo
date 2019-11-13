@@ -1,14 +1,12 @@
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-      #    url: jdbc:mysql://192.168.198.129:3306/demo?characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false&useSSL=true
+    #    url: jdbc:mysql://192.168.198.129:3306/demo?characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false&useSSL=true
     url: jdbc:p6spy:mysql://192.168.198.130:3306/sell?characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false&useSSL=true&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
-  http:
-    encoding:
-      charset: GB2312
+
 mybatis-plus:
   global-config:
     db-config:
