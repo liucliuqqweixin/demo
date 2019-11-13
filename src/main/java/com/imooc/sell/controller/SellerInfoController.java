@@ -1,8 +1,8 @@
 package com.imooc.sell.controller;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.imooc.sell.common.VO.Result;
-import com.imooc.sell.common.form.Page;
 import com.imooc.sell.entity.ProductInfo;
 import com.imooc.sell.entity.SellerInfo;
 import org.springframework.validation.BindingResult;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/seller-info")
-public class SellerInfoController implements BaseController<SellerInfo,String>{
+public class SellerInfoController implements BaseController<SellerInfo, String> {
 
     @Override
     public Result list(SellerInfo sellerInfo, Page page) {

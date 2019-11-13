@@ -19,7 +19,7 @@ public class SellExceptionHandler {
             return ResultUtil.error(exception.getCode(), exception.getMessage());
         } else {
             e.printStackTrace();
-            return ResultUtil.error(CommonEnum.ERROR.getCode(), CommonEnum.ERROR.getMsg());
+            return ResultUtil.error(CommonEnum.UNKNOWN_ERROR.getCode(), CommonEnum.UNKNOWN_ERROR.getMsg());
         }
 
     }

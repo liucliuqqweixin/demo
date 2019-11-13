@@ -4,9 +4,9 @@ import lombok.Getter;
 
 @Getter
 public enum CommonEnum implements LEnum {
-    SUCCESS(200, "成功"),
+    SUCCESS(0, "成功"),
     ERROR(500, "失败"),
-    UNKNOWNERROR(-1, "未知错误");;
+    UNKNOWN_ERROR(-1, "未知错误");;
 
     CommonEnum(Integer code, String msg) {
         this.code = code;

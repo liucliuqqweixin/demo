@@ -1,7 +1,10 @@
 package com.imooc.sell.service;
 
+import com.imooc.sell.dto.CartDTO;
 import com.imooc.sell.entity.ProductInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +15,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2019-11-10
  */
 public interface IProductInfoService extends IService<ProductInfo> {
+    void increaseStock(List<CartDTO> cartDTOList);
 
+    void decreaseStock(List<CartDTO> cartDTOList);
 }

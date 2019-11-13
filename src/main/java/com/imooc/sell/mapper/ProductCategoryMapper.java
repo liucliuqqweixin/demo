@@ -1,8 +1,7 @@
 package com.imooc.sell.mapper;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.imooc.sell.common.VO.ProductCategoryVO;
-import com.imooc.sell.common.form.Page;
 import com.imooc.sell.common.form.ProductCategoryForm;
 import com.imooc.sell.entity.ProductCategory;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -20,7 +19,7 @@ import java.util.List;
  */
 public interface ProductCategoryMapper extends BaseMapper<ProductCategory> {
 
-    List<ProductCategoryVO> selectList1(@Param("form") ProductCategoryForm form);
+    Page<ProductCategoryVO> selectList1(@Param("page") Page page, @Param("form") ProductCategoryForm form);
 
 
 }

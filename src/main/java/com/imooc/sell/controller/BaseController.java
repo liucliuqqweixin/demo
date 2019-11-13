@@ -1,7 +1,7 @@
 package com.imooc.sell.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.imooc.sell.common.VO.Result;
-import com.imooc.sell.common.form.Page;
 import org.springframework.validation.BindingResult;
 
 public interface BaseController<T,S> {

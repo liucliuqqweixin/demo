@@ -2,4 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.imooc.sell.mapper.OrderDetailMapper">
 
+    <insert id="insertBatch" parameterType="com.imooc.sell.entity.OrderDetail">
+        insert into order_detail
+        (detail_id, order_id, product_id, product_name, product_price, product_quantity, product_icon,create_time)
+        values
+        <foreach collection="orderDetailList" item="orderDetailList" index="index" separator=",">
+            (#{orderDetailList.detailId} ,#{orderDetailList.orderId},#{orderDetailList.productId}
+            ,#{orderDetailList.productName}
+            ,#{orderDetailList.productPrice} ,#{orderDetailList.productQuantity} ,#{orderDetailList.productIcon}
+            ,#{orderDetailList.createTime} )
+        </foreach>
+    </insert>
 </mapper>

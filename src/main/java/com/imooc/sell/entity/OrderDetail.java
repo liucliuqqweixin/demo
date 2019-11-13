@@ -1,8 +1,10 @@
 package com.imooc.sell.entity;
 
 import java.math.BigDecimal;
+
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -28,7 +30,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="OrderDetail对象", description="订单详情表")
+@ApiModel(value = "OrderDetail对象", description = "订单详情表")
 public class OrderDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -55,7 +57,7 @@ public class OrderDetail implements Serializable {
 
     @ApiModelProperty(value = "创建时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
     @JsonIgnore
@@ -64,9 +66,6 @@ public class OrderDetail implements Serializable {
     @TableLogic
     @JsonIgnore
     private Integer del;
-
-    @ApiModelProperty(value = "状态 0:在售 1：不在售")
-    private StateEnum state;
 
 
 }

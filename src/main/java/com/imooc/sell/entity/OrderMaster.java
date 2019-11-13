@@ -1,12 +1,17 @@
 package com.imooc.sell.entity;
 
 import java.math.BigDecimal;
-import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
 
-import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.*;
+
+import java.time.LocalDateTime;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import com.imooc.sell.enums.CommonEnum;
+import com.imooc.sell.enums.OrderStatusEnum;
+import com.imooc.sell.enums.PayStatusEnum;
 import com.imooc.sell.enums.StateEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -25,7 +30,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="OrderMaster对象", description="订单主表")
+@ApiModel(value = "OrderMaster对象", description = "订单主表")
 public class OrderMaster implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,16 +54,18 @@ public class OrderMaster implements Serializable {
     private BigDecimal orderAmount;
 
     @ApiModelProperty(value = "订单状态, 默认为新下单")
-    private Integer orderStatus;
+    private OrderStatusEnum orderStatus = OrderStatusEnum.NEW;
 
     @ApiModelProperty(value = "支付状态, 默认未支付")
-    private Integer payStatus;
+    private PayStatusEnum payStatus = PayStatusEnum.WAIT;
 
     @ApiModelProperty(value = "创建时间")
-    private LocalDateTime createTime;
+    @TableField(fill = FieldFill.INSERT)
+    private Date createTime;
 
     @ApiModelProperty(value = "修改时间")
-    private LocalDateTime updateTime;
+    @TableField(fill = FieldFill.UPDATE)
+    private Date updateTime;
     @TableLogic
     private StateEnum del;
 

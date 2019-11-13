@@ -21,13 +21,13 @@ class ProductInfoMapperTest {
     @Test
     void test1() {
         ProductInfo productInfo = new ProductInfo();
-        productInfo.setProductName("皮皮虾");
-        productInfo.setProductPrice(new BigDecimal("3.2"));
-        productInfo.setProductStock(100);
-        productInfo.setProductDescription("很好吃的虾");
+        productInfo.setProductName("芒果冰");
+        productInfo.setProductPrice(new BigDecimal("20.2"));
+        productInfo.setProductStock(200);
+        productInfo.setProductDescription("冰冰的很爽");
         productInfo.setProductIcon("http://xxxx.jpg");
         productInfo.setProductStatus(StateEnum.OBTAINED);
-        productInfo.setCategoryType(2);
+        productInfo.setCategoryType(3);
         productInfoMapper.insert(productInfo);
     }
     @Test

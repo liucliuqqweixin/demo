@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imooc.sell.mapper.OrderMasterMapper">
+    <resultMap id="orderDTO" type="com.imooc.sell.dto.OrderDTO">
+        <id property="orderId" column="order_id"/>
+        <result property="buyerName" column="buyer_name"/>
+        <result property="buyerPhone" column="buyer_phone"/>
+        <result property="buyerAddress" column="buyer_address"/>
+        <result property="buyerOpenid" column="buyer_openid"/>
+        <result property="orderAmount" column="order_amount"/>
+        <result property="orderStatus" column="order_status"/>
+        <result property="payStatus" column="pay_status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <collection property="orderDetailList" ofType="com.imooc.sell.entity.OrderDetail">
+            <result property="detailId" column="detail_id"/>
+            <result property="orderId" column="order_id"/>
+            <result property="productId" column="product_id"/>
+            <result property="productName" column="product_name"/>
+            <result property="productPrice" column="product_price"/>
+            <result property="productQuantity" column="product_quantity"/>
+            <result property="productIcon" column="product_icon"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateTime" column="update_time"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectOrderDTOById" resultMap="orderDTO" parameterType="java.lang.String">
+        select *
+        from (select * from order_master where del = 0 and order_id = #{id}) a
+               left join order_detail b on a.order_id = b.order_id
+    </select>
+    <select id="selectOrderDTOList" resultMap="orderDTO">
+        select *
+        from (select * from order_master where del = 0 and buyer_openid = #{buyerOpenid})a
+               left join order_detail b on a.order_id = b.order_id
+    </select>
+
+</mapper>

@@ -4,7 +4,7 @@ import com.imooc.sell.enums.LEnum;
 
 public class ServiceException extends BaseException {
 
-    public ServiceException(String message, Integer code) {
+    public ServiceException(Integer code, String message) {
         super(message, code);
     }
 

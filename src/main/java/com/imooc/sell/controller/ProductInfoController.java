@@ -1,11 +1,15 @@
 package com.imooc.sell.controller;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.imooc.sell.common.VO.Result;
-import com.imooc.sell.common.form.Page;
+import com.imooc.sell.common.form.ProductCategoryForm;
 import com.imooc.sell.entity.ProductCategory;
 import com.imooc.sell.entity.ProductInfo;
+import com.imooc.sell.service.IProductCategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -19,12 +23,19 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2019-11-10
  */
 @RestController
-@RequestMapping("/product-info")
-public class ProductInfoController implements BaseController<ProductInfo,String>{
+@RequestMapping("/buyer")
+public class ProductInfoController implements BaseController<ProductInfo, String> {
+    @Autowired
+    private IProductCategoryService iProductCategoryService;
 
     @Override
     public Result list(ProductInfo productInfo, Page page) {
         return null;
+    }
+
+    @GetMapping("product/list")
+    public Result getList(ProductCategoryForm form, Page page) {
+        return iProductCategoryService.listPage(form, page);
     }
 
     @Override
