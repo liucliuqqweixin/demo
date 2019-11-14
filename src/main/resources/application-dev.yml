@@ -2,11 +2,12 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     #    url: jdbc:mysql://192.168.198.129:3306/demo?characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false&useSSL=true
-    url: jdbc:p6spy:mysql://192.168.10.76:3306/sell?characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false&useSSL=true&serverTimezone=Asia/Shanghai
+    url: jdbc:p6spy:mysql://192.168.198.130:3306/sell?characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false&useSSL=true&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
-
+#  jackson:
+#    default-property-inclusion: non_null
 mybatis-plus:
   global-config:
     db-config:
@@ -18,3 +19,6 @@ server:
   port: 8080
   servlet:
     context-path: /sell
+wechat:
+  mpAppId: wx6ad144e54af67d87
+  mpAppSecret: 9b848bb6a4fab51e36136db9110b0823

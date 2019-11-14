@@ -38,7 +38,7 @@ public class ExcelUtil {
          */
         @Override
         public void invoke(Object object, AnalysisContext context) {
-            List<String> stringList= (List<String>) object;
+            List<String> stringList = (List<String>) object;
             //数据存储到list，供批量处理，或后续自己业务逻辑处理。
             datas.add(stringList);
             //根据自己业务做处理
@@ -53,6 +53,7 @@ public class ExcelUtil {
         public List<List<String>> getDatas() {
             return datas;
         }
+
         public void setDatas(List<List<String>> datas) {
             this.datas = datas;
         }
@@ -60,30 +61,32 @@ public class ExcelUtil {
 
     /**
      * 使用 StringList 来读取Excel
-     * @param inputStream Excel的输入流
+     *
+     * @param inputStream   Excel的输入流
      * @param excelTypeEnum Excel的格式(XLS或XLSX)
      * @return 返回 StringList 的列表
      */
-    public static List<List<String>> readExcelWithStringList(InputStream inputStream,ExcelTypeEnum excelTypeEnum) {
+    public static List<List<String>> readExcelWithStringList(InputStream inputStream, ExcelTypeEnum excelTypeEnum) {
         StringExcelListener listener = new StringExcelListener();
         ExcelReader excelReader = new ExcelReader(inputStream, excelTypeEnum, null, listener);
         excelReader.read();
-        return  listener.getDatas();
+        return listener.getDatas();
     }
 
     /**
      * 使用 StringList 来写入Excel
-     * @param outputStream Excel的输出流
-     * @param data 要写入的以StringList为单位的数据
-     * @param table 配置Excel的表的属性
+     *
+     * @param outputStream  Excel的输出流
+     * @param data          要写入的以StringList为单位的数据
+     * @param table         配置Excel的表的属性
      * @param excelTypeEnum Excel的格式(XLS或XLSX)
      */
-    public static void writeExcelWithStringList(OutputStream outputStream, List<List<String>> data, Table table,ExcelTypeEnum excelTypeEnum) {
+    public static void writeExcelWithStringList(OutputStream outputStream, List<List<String>> data, Table table, ExcelTypeEnum excelTypeEnum) {
         //这里指定不需要表头，因为String通常表头已被包含在data里
-        ExcelWriter writer = new ExcelWriter(outputStream, excelTypeEnum,false);
+        ExcelWriter writer = new ExcelWriter(outputStream, excelTypeEnum, false);
         //写第一个sheet, sheet1  数据全是List<String> 无模型映射关系,无表头
         Sheet sheet1 = new Sheet(0, 0);
-        writer.write0(data, sheet1,table);
+        writer.write0(data, sheet1, table);
         writer.finish();
     }
 
@@ -115,10 +118,9 @@ public class ExcelUtil {
     /**
      * 使用 模型 来读取Excel
      *
-     * @param inputStream Excel的输入流
-     * @param clazz 模型的类
+     * @param inputStream   Excel的输入流
+     * @param clazz         模型的类
      * @param excelTypeEnum Excel的格式(XLS或XLSX)
-     *
      * @return 返回 模型 的列表
      */
     public static <E> List<E> readExcelWithModel(InputStream inputStream, Class<? extends BaseRowModel> clazz, ExcelTypeEnum excelTypeEnum) {
@@ -134,16 +136,15 @@ public class ExcelUtil {
     /**
      * 使用 模型 来写入Excel
      *
-     * @param outputStream Excel的输出流
-     * @param data 要写入的以 模型 为单位的数据
-     * @param table 配置Excel的表的属性
-     * @param clazz 模型的类
+     * @param outputStream  Excel的输出流
+     * @param data          要写入的以 模型 为单位的数据
+     * @param clazz         模型的类
      * @param excelTypeEnum Excel的格式(XLS或XLSX)
      */
     public static void writeExcelWithModel(OutputStream outputStream, List<? extends BaseRowModel> data,
-                                           Class<? extends BaseRowModel> clazz, ExcelTypeEnum excelTypeEnum)  {
+                                           Class<? extends BaseRowModel> clazz, ExcelTypeEnum excelTypeEnum) {
         //这里指定需要表头，因为model通常包含表头信息
-        ExcelWriter writer = new ExcelWriter(outputStream, excelTypeEnum,true);
+        ExcelWriter writer = new ExcelWriter(outputStream, excelTypeEnum, true);
         //写第一个sheet, sheet1  数据全是List<String> 无模型映射关系
         Sheet sheet1 = new Sheet(1, 0, clazz);
         writer.write(data, sheet1);

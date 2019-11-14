@@ -13,6 +13,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotEmpty;
+
 /**
  * <p>
  * 卖家信息表
@@ -31,7 +33,7 @@ public class SellerInfo implements Serializable {
 
     @TableId(value = "seller_id", type = IdType.UUID)
     private String sellerId;
-
+    @NotEmpty(message = "是的撒多所")
     private String username;
 
     private String password;

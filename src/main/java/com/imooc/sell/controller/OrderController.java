@@ -5,18 +5,16 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.imooc.sell.common.VO.Result;
 import com.imooc.sell.common.convert.OrderForm2OrderDTOConverter;
 import com.imooc.sell.common.exception.ServiceException;
-import com.imooc.sell.common.form.OrderDetailForm;
 import com.imooc.sell.common.form.OrderForm;
 import com.imooc.sell.dto.OrderDTO;
 import com.imooc.sell.entity.OrderDetail;
 import com.imooc.sell.enums.ResultEnum;
+import com.imooc.sell.service.BuyerService;
 import com.imooc.sell.service.IOrderService;
 import com.imooc.sell.util.ResultUtil;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.MediaType;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
@@ -41,29 +39,23 @@ import java.util.Map;
 @RequestMapping("/buyer/order")
 @Api(tags = "订单详情接口", description = "OrderDetail订单详情接口文档")
 @Slf4j
-public class OrderController implements BaseController<OrderDetail, String> {
+public class OrderController {
 
     @Autowired
     private IOrderService orderService;
 
+    @Autowired
+    private BuyerService buyerService;
 
     //创建订单
     @PostMapping(value = "/create")
-    public Result create(@Validated OrderForm orderForm,
-                         BindingResult bindingResult, HttpServletRequest request) {
-        if (bindingResult.hasErrors()) {
-            log.error("【创建订单】参数不正确, orderForm={}", orderForm);
-            throw new ServiceException(ResultEnum.PARAM_ERROR.getCode(),
-                    bindingResult.getFieldError().getDefaultMessage());
-        }
+    public Result create(@Validated OrderForm orderForm, BindingResult bindingResult) {
         OrderDTO orderDTO = OrderForm2OrderDTOConverter.convert(orderForm);
         if (CollectionUtils.isEmpty(orderDTO.getOrderDetailList())) {
             log.error("【创建订单】购物车不能为空");
             throw new ServiceException(ResultEnum.CART_EMPTY);
         }
-
         OrderDTO createResult = orderService.create(orderDTO);
-
         Map<String, String> map = new HashMap<>();
         map.put("orderId", createResult.getOrderId());
 
@@ -89,47 +81,20 @@ public class OrderController implements BaseController<OrderDetail, String> {
     }
 
 
-    //订单详情
-//    @GetMapping("/detail")
-//    public Result detail(@RequestParam("openid") String openid,
-//                         @RequestParam("orderId") String orderId) {
-//        OrderDTO orderDTO = buyerService.findOrderOne(openid, orderId);
-//        return ResultUtil.success(orderDTO);
-//    }
+    //    订单详情
+    @GetMapping("/detail")
+    public Result detail(@RequestParam("openid") String openid,
+                         @RequestParam("orderId") String orderId) {
+        OrderDTO orderDTO = buyerService.findOrderOne(openid, orderId);
+        return ResultUtil.success(orderDTO);
+    }
 
     //取消订单
-//    @PostMapping("/cancel")
-//    public Result cancel(@RequestParam("openid") String openid,
-//                         @RequestParam("orderId") String orderId) {
-//        orderService.cancelOrder(openid, orderId);
-//        return ResultUtil.success();
-//    }
-
-
-    @Override
-    public Result list(OrderDetail orderDetail, Page page) {
-        return null;
+    @PostMapping("/cancel")
+    public Result cancel(@RequestParam("openid") String openid,
+                         @RequestParam("orderId") String orderId) {
+        buyerService.cancel(openid, orderId);
+        return ResultUtil.success();
     }
 
-//    @GetMapping
-//    public Result listPage(OrderDetailForm orderDetail, Page page) {
-//        return orderDetailService.page(orderDetail, page);
-//    }
-
-
-    @Override
-    public Result insert(@RequestBody @Validated OrderDetail orderDetail, BindingResult bindingResult) {
-        return null;
-    }
-
-    @Override
-    public Result update(@RequestBody @Validated OrderDetail orderDetail, BindingResult bindingResult) {
-        return null;
-    }
-
-    @Override
-    public Result delete(@PathVariable("id") String id) {
-//        boolean flag = orderDetailService.removeById(id);
-        return ResultUtil.success(true);
-    }
 }

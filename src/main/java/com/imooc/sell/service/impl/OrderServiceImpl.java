@@ -116,6 +116,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDetailMapper, OrderDetail
             //3.写入订单数据库（orderMaster和orderDetail）
             OrderMaster orderMaster = new OrderMaster();
             BeanUtils.copyProperties(orderDTO, orderMaster);
+            orderDTO.setOrderId(orderId);
             orderMaster.setOrderId(orderId)
                     .setOrderAmount(orderAmount);
 
@@ -143,6 +144,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDetailMapper, OrderDetail
 
     @Override
     public Page<OrderDTO> findList(String buyerOpenid, com.baomidou.mybatisplus.extension.plugins.pagination.Page page) {
+        page.setSearchCount(false);
         Page<OrderDTO> orderDTOList = orderMasterMapper.selectOrderDTOList(page, buyerOpenid);
         return orderDTOList;
     }
