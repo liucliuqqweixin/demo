@@ -3,6 +3,7 @@ package com.imooc.sell.mapper;
 import java.math.BigDecimal;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.imooc.sell.dto.OrderDTO;
 import com.imooc.sell.enums.OrderStatusEnum;
 
 import java.util.Date;
@@ -44,6 +45,9 @@ class OrderMasterMapperTest {
     @Test
     void selectOrderDTOList() {
         Page page = new Page();
-        System.out.println(JsonUtil.toJson(orderMasterMapper.selectOrderDTOList( page,"110110")));
+        page.setSearchCount(false);
+        Page<OrderDTO> dtoPage = orderMasterMapper.selectOrderDTOList(page, "110110");
+        dtoPage.setTotal(orderMasterMapper.selectCount(null));
+        System.out.println(JsonUtil.toJson(dtoPage));
     }
 }

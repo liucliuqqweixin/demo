@@ -16,4 +16,8 @@ import java.util.List;
  */
 public interface UserMapper extends BaseMapper<User> {
     Integer insertBach(@Param("users") List<User> users);
+
+    List<User> seletListUser();
+
+    Integer insertUser(@Param("user") User user);
 }

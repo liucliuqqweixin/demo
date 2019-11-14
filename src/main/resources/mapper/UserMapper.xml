@@ -11,4 +11,14 @@
             )
         </foreach>
     </insert>
+    <insert id="insertUser">
+        insert into user
+        (name, age)
+        values(
+        #{user.name},#{user.age}
+        )
+    </insert>
+    <select id="seletListUser" resultType="com.imooc.sell.entity.User">
+        select * from user
+    </select>
 </mapper>
