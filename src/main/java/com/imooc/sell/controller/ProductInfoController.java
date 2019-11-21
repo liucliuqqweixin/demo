@@ -24,32 +24,14 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/buyer")
-public class ProductInfoController implements BaseController<ProductInfo, String> {
+public class ProductInfoController {
     @Autowired
     private IProductCategoryService iProductCategoryService;
 
-    @Override
-    public Result list(ProductInfo productInfo, Page page) {
-        return null;
-    }
 
     @GetMapping("product/list")
     public Result getList(ProductCategoryForm form, Page page) {
         return iProductCategoryService.listPage(form, page);
     }
 
-    @Override
-    public Result insert(ProductInfo productInfo, BindingResult bindingResult) {
-        return null;
-    }
-
-    @Override
-    public Result update(ProductInfo productInfo, BindingResult bindingResult) {
-        return null;
-    }
-
-    @Override
-    public Result delete(String s) {
-        return null;
-    }
 }

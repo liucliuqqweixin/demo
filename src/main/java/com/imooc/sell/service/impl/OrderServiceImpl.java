@@ -22,6 +22,7 @@ import com.imooc.sell.mapper.ProductInfoMapper;
 import com.imooc.sell.service.IOrderService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.imooc.sell.service.IProductInfoService;
+import com.imooc.sell.service.PayService;
 import com.imooc.sell.util.KeyUtil;
 import com.imooc.sell.util.ResultUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -59,31 +60,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderDetailMapper, OrderDetail
     @Autowired
     private OrderMasterMapper orderMasterMapper;
 
-    @Override
-    public Result page(OrderDetailForm orderDetail, Page page) {
-        LambdaQueryWrapper<OrderDetail> wrapper = Wrappers.lambdaQuery();
-        if (orderDetail != null) {
-            if (StringUtils.isNotEmpty(orderDetail.getProductName())) {
-                wrapper.like(OrderDetail::getProductName, orderDetail.getProductName());
-            }
-            if (orderDetail.getCreateTime() != null) {
-                wrapper.ge(OrderDetail::getCreateTime, orderDetail.getCreateTime());
-            }
-            if (orderDetail.getProductPrice() != null) {
-                wrapper.le(OrderDetail::getProductPrice, orderDetail.getProductPrice());
-            }
-            if (orderDetail.getProductQuantity() != null) {
-                wrapper.le(OrderDetail::getProductQuantity, orderDetail.getProductQuantity());
-            }
 
-        }
-        IPage<OrderDetail> iPage = new Page<>();
-        iPage.setCurrent(page.getCurrent());
-        iPage.setSize(page.getSize());
-        IPage<OrderDetail> detailIPage = orderDetailMapper.selectPage(iPage, wrapper);
-        return ResultUtil.success(detailIPage);
-
-    }
+    @Autowired
+    private PayService payService;
 
     @Override
     @Transactional
@@ -143,9 +122,16 @@ public class OrderServiceImpl extends ServiceImpl<OrderDetailMapper, OrderDetail
     }
 
     @Override
-    public Page<OrderDTO> findList(String buyerOpenid, com.baomidou.mybatisplus.extension.plugins.pagination.Page page) {
+    public Page<OrderDTO> findList(String buyerOpenid, Page page) {
         page.setSearchCount(false);
         Page<OrderDTO> orderDTOList = orderMasterMapper.selectOrderDTOList(page, buyerOpenid);
+        LambdaQueryWrapper<OrderMaster> wrapper = null;
+        if(StringUtils.isNotEmpty(buyerOpenid)){
+            wrapper = Wrappers.lambdaQuery();
+            wrapper.eq(OrderMaster::getBuyerOpenid,buyerOpenid);
+        }
+        Integer count = orderMasterMapper.selectCount(wrapper);
+        orderDTOList.setTotal(count);
         return orderDTOList;
     }
 
@@ -160,8 +146,12 @@ public class OrderServiceImpl extends ServiceImpl<OrderDetailMapper, OrderDetail
         List<CartDTO> cartDTOS = orderDTO.getOrderDetailList().stream().map(e -> new CartDTO(e.getProductId(), e.getProductQuantity())).collect(Collectors.toList());
         iProductInfoService.increaseStock(cartDTOS);
         //如果已经支付 需要退款
-        if (orderDTO.getOrderStatus().equals(PayStatusEnum.SUCCESS.getValue())) {
-            //TODO
+        if (orderDTO.getPayStatus().equals(PayStatusEnum.SUCCESS.getValue())) {
+            payService.refund(orderDTO);
+            OrderMaster orderMaster = new OrderMaster();
+            BeanUtils.copyProperties(orderDTO, orderMaster);
+            orderMaster.setPayStatus(PayStatusEnum.RETURN);
+            orderMasterMapper.updateById(orderMaster);
         }
         return orderDTO;
     }

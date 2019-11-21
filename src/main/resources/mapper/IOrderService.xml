@@ -32,7 +32,11 @@
     </select>
     <select id="selectOrderDTOList" resultMap="orderDTO">
         select *
-        from (select * from order_master where del = 0 and buyer_openid = #{buyerOpenid})a
+        from (select * from order_master where del = 0
+        <if test="buyerOpenid != null and buyerOpenid != ''">
+            and buyer_openid = #{buyerOpenid}
+        </if>
+         )a
                left join order_detail b on a.order_id = b.order_id
     </select>
 

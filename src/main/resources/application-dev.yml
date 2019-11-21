@@ -20,5 +20,14 @@ server:
   servlet:
     context-path: /sell
 wechat:
-  mpAppId: wx6ad144e54af67d87
+#  mpAppId: wx480cb6252eb12fb3
+  mpAppId: wxd898fcb01713c658
   mpAppSecret: 9b848bb6a4fab51e36136db9110b0823
+  mchId: 1483469312
+  mchKey: 098F6BCD4621D373CADE4E832627B4F6
+  keyPath: E:\github\own\demo\src\main\resources\templates\h5.p12
+  notifyUrl: http://liuc.natapp1.cc/sell/pay/notify
+beetl:
+  templatesPath: /web
+beetlsql:
+  enabled: false

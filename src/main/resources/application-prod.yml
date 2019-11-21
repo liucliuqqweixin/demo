@@ -1,1 +1,33 @@
-
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    #    url: jdbc:mysql://192.168.198.129:3306/demo?characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false&useSSL=true
+    url: jdbc:p6spy:mysql://192.168.198.130:3306/sell?characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false&useSSL=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+#  jackson:
+#    default-property-inclusion: non_null
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+  type-enums-package: com.imooc.sell.enums
+  mapper-locations: classpath:/mapper/*.xml
+server:
+  port: 8080
+  servlet:
+    context-path: /sell
+wechat:
+  #  mpAppId: wx480cb6252eb12fb3
+  mpAppId: wxd898fcb01713c658
+  mpAppSecret: 9b848bb6a4fab51e36136db9110b0823
+  mchId: 1483469312
+  mchKey: 098F6BCD4621D373CADE4E832627B4F6
+  keyPath: E:\github\own\demo\src\main\resources\templates\h5.p12
+  notifyUrl: http://liuc.natapp1.cc/sell/pay/notify
+beetl:
+  templatesPath: /web
+beetlsql:
+  enabled: false

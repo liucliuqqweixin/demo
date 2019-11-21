@@ -35,6 +35,6 @@ public class ProductCategoryServiceImpl extends ServiceImpl<ProductCategoryMappe
     @Override
     public Result listPage(ProductCategoryForm productCategoryForm, Page page) {
         Page<ProductCategoryVO> productCategoryVOPage = productCategoryMapper.selectList1(page, productCategoryForm);
-        return ResultUtil.success(productCategoryVOPage);
+        return ResultUtil.success(productCategoryVOPage.getRecords());
     }
 }

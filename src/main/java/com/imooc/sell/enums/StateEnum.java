@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.io.Serializable;
 
-public enum StateEnum implements IEnum {
+public enum StateEnum implements IEnum ,LEnum{
     OBTAINED(1, "下架"),
     NORMAL(0, "正常");
     private Integer code;
@@ -19,6 +19,11 @@ public enum StateEnum implements IEnum {
     @Override
     public Serializable getValue() {
         return this.code;
+    }
+
+    @Override
+    public Integer getCode() {
+        return code;
     }
 
     @JsonValue

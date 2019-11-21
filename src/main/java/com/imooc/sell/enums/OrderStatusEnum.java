@@ -7,7 +7,7 @@ import lombok.Getter;
 import java.io.Serializable;
 
 
-public enum OrderStatusEnum implements IEnum {
+public enum OrderStatusEnum implements IEnum, LEnum {
     NEW(0, "新订单"),
 
     FINISHED(1, "完结"),
@@ -21,6 +21,11 @@ public enum OrderStatusEnum implements IEnum {
 
     private Integer code;
     private String msg;
+
+    @Override
+    public Integer getCode() {
+        return code;
+    }
 
     @Override
     public Serializable getValue() {

@@ -14,12 +14,13 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 public class WeixinController {
     @GetMapping("/auth")
-    public void auth(@RequestParam("code") String code) {
+    public void auth(@RequestParam("code") String code, @RequestParam("state") String state) {
         log.info("进入方法");
         log.info("code = {}", code);
+        System.out.println(state);
         String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx480cb6252eb12fb3&secret=9b848bb6a4fab51e36136db9110b0823&code=" + code + "&grant_type=authorization_code";
+        System.out.println(url);
         RestTemplate restTemplate = new RestTemplate();
         String accessToken = restTemplate.getForObject(url, String.class);
-        System.out.println(JsonUtil.toJson(accessToken));
     }
 }

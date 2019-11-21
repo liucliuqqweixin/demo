@@ -27,7 +27,7 @@ public class BuyerServiceImpl implements BuyerService {
         if (orderDTO == null) {
             return null;
         }
-        if (!orderDTO.getOrderId().equalsIgnoreCase(openid)) {
+        if (!orderDTO.getBuyerOpenid().equalsIgnoreCase(openid)) {
             log.info("【查询订单】订单的openid不一致,openid:{},orderDTO={}", openid, orderDTO);
             throw new ServiceException(ResultEnum.ORDER_OWNER_ERROR);
         }

@@ -1,11 +1,8 @@
 package com.imooc.sell.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.imooc.sell.entity.OrderDetail;
-import com.imooc.sell.enums.OrderStatusEnum;
-import com.imooc.sell.enums.PayStatusEnum;
 import com.imooc.sell.util.Date2LongSerializer;
 import lombok.Data;
 

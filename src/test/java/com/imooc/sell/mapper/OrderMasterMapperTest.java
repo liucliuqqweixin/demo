@@ -46,7 +46,7 @@ class OrderMasterMapperTest {
     void selectOrderDTOList() {
         Page page = new Page();
         page.setSearchCount(false);
-        Page<OrderDTO> dtoPage = orderMasterMapper.selectOrderDTOList(page, "110110");
+        Page<OrderDTO> dtoPage = orderMasterMapper.selectOrderDTOList(page, "oTgZpwUYcj3qUXDoCM0ObMLHtduY");
         dtoPage.setTotal(orderMasterMapper.selectCount(null));
         System.out.println(JsonUtil.toJson(dtoPage));
     }

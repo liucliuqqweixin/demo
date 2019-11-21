@@ -17,7 +17,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2019-11-10
  */
 public interface IOrderService {
-    Result page(OrderDetailForm orderDetail, Page page);
 
     /**
      * 创建订单
