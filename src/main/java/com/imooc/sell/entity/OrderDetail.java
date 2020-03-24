@@ -2,11 +2,15 @@ package com.imooc.sell.entity;
 
 import java.math.BigDecimal;
 
+import com.alibaba.excel.metadata.BaseRowModel;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -17,6 +21,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -66,6 +71,5 @@ public class OrderDetail implements Serializable {
     @TableLogic
     @JsonIgnore
     private Integer del;
-
 
 }

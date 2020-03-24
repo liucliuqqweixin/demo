@@ -23,6 +23,7 @@ import com.imooc.sell.service.IOrderService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.imooc.sell.service.IProductInfoService;
 import com.imooc.sell.service.PayService;
+import com.imooc.sell.service.PushMessage;
 import com.imooc.sell.util.KeyUtil;
 import com.imooc.sell.util.ResultUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -63,6 +64,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderDetailMapper, OrderDetail
 
     @Autowired
     private PayService payService;
+
+    @Autowired
+    private PushMessage pushMessage;
 
     @Override
     @Transactional
@@ -179,6 +183,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDetailMapper, OrderDetail
     @Override
     public OrderDTO finish(OrderDTO orderDTO) {
         orderDTO = checkOrderDTOAndUpdate(orderDTO, OrderStatusEnum.FINISHED);
+        pushMessage.orderStatus(orderDTO);
         return orderDTO;
     }
 

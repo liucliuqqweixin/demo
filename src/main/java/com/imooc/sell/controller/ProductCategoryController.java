@@ -30,7 +30,6 @@ public class ProductCategoryController {
 
     @GetMapping("/list")
     public Result listPage(ProductCategoryForm productCategory, Page page) {
-
         return iProductCategoryService.listPage(productCategory, page);
     }
 }

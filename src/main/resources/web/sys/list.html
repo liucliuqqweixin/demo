@@ -1,147 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>卖家商品列表</title>
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
+@include("../common/header.html",{title:"订单列表"}){}
 <body>
-<div class="container-fluid">
-    <div class="row-fluid">
-        <div class="span12">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>
-                        订单id
-                    </th>
-                    <th>
-                        姓名
-                    </th>
-                    <th>
-                        手机号
-                    </th>
-                    <th>
-                        地址
-                    </th>
-                    <th>
-                        金额
-                    </th>
-                    <th>
-                        订单状态
-                    </th>
-                    <th>
-                        支付方式
-                    </th>
-                    <th>
-                        支付状态
-                    </th>
-                    <th>
-                        创建时间
-                    </th>
-                    <th colspan="2">
-                        操作
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                @for(dto in dtoPage.records){
-                @if(dtoLP.dataIndex%2 == 0){
-                <tr>
-                    <td>
-                        ${dto.orderId}
-                    </td>
-                    <td>
-                        ${dto.buyerName}
-                    </td>
-                    <td>
-                        ${dto.buyerPhone}
-                    </td>
-                    <td>
-                        ${dto.buyerAddress}
-                    </td>
-                    <td>
-                        ${dto.orderAmount}
-                    </td>
-                    <td>
-                        ${enumFunction(dto.orderStatus,"OrderStatusEnum")}
-                    </td>
-                    <td>
-                        ${dto.orderId}
-                    </td>
-                    <td>
-                        ${enumFunction(dto.payStatus,"PayStatusEnum")}
-                    </td>
-                    <td>
-                        ${dto.createTime,dateFormat="yyyy-MM-dd HH:mm:ss" }
-                    </td>
-                    <td>
-                        <a href="/sell/seller/order/detail?orderId=${dto.orderId}">详情</a>
-                    </td>
-                    <td>
-                        @if(enumFunction(dto.orderStatus,"OrderStatusEnum") != "取消" && enumFunction(dto.orderStatus,"OrderStatusEnum") != "完结"){
-                        <a href="/sell/seller/order/cancel?orderId=${dto.orderId}">取消</a>
+<div id="wrapper" class="toggled">
+    @include("../common/left.html"){}
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>
+                                订单id
+                            </th>
+                            <th>
+                                姓名
+                            </th>
+                            <th>
+                                手机号
+                            </th>
+                            <th>
+                                地址
+                            </th>
+                            <th>
+                                金额
+                            </th>
+                            <th>
+                                订单状态
+                            </th>
+                            <th>
+                                支付方式
+                            </th>
+                            <th>
+                                支付状态
+                            </th>
+                            <th>
+                                创建时间
+                            </th>
+                            <th colspan="2">
+                                操作
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @for(dto in dtoPage.records){
+                        @if(dtoLP.dataIndex%2 == 0){
+                        <tr>
+                            <td>
+                                ${dto.orderId}
+                            </td>
+                            <td>
+                                ${dto.buyerName}
+                            </td>
+                            <td>
+                                ${dto.buyerPhone}
+                            </td>
+                            <td>
+                                ${dto.buyerAddress}
+                            </td>
+                            <td>
+                                ${dto.orderAmount}
+                            </td>
+                            <td>
+                                ${enumFunction(dto.orderStatus,"OrderStatusEnum")}
+                            </td>
+                            <td>
+                                ${dto.orderId}
+                            </td>
+                            <td>
+                                ${enumFunction(dto.payStatus,"PayStatusEnum")}
+                            </td>
+                            <td>
+                                ${dto.createTime,dateFormat="yyyy-MM-dd HH:mm:ss" }
+                            </td>
+                            <td>
+                                <a href="/sell/seller/order/detail?orderId=${dto.orderId}">详情</a>
+                            </td>
+                            <td>
+                                @if(enumFunction(dto.orderStatus,"OrderStatusEnum") != "取消" && enumFunction(dto.orderStatus,"OrderStatusEnum") != "完结"){
+                                <a href="/sell/seller/order/cancel?orderId=${dto.orderId}">取消</a>
+                                @}
+                            </td>
+                        </tr>
+                        @}else{
+                        <tr class="success">
+                            <td>
+                                ${dto.orderId}
+                            </td>
+                            <td>
+                                ${dto.buyerName}
+                            </td>
+                            <td>
+                                ${dto.buyerPhone}
+                            </td>
+                            <td>
+                                ${dto.buyerAddress}
+                            </td>
+                            <td>
+                                ${dto.orderAmount}
+                            </td>
+                            <td>
+                                ${enumFunction(dto.orderStatus,"OrderStatusEnum")}
+                            </td>
+                            <td>
+                                ${dto.orderId}
+                            </td>
+                            <td>
+                                ${enumFunction(dto.payStatus,"PayStatusEnum")}
+                            </td>
+                            <td>
+                                ${dto.createTime,dateFormat="yyyy-MM-dd HH:mm:ss" }
+                            </td>
+                            <td>
+                                <a href="/sell/seller/order/detail?orderId=${dto.orderId}">详情</a>
+                            </td>
+                            <td>
+                                @if(enumFunction(dto.orderStatus,"OrderStatusEnum") != "取消"){
+                                <a href="/sell/seller/order/cancel?orderId=${dto.orderId}">取消</a>
+                                @}
+                            </td>
+                        </tr>
                         @}
-                    </td>
-                </tr>
-                @}else{
-                <tr class="success">
-                    <td>
-                        ${dto.orderId}
-                    </td>
-                    <td>
-                        ${dto.buyerName}
-                    </td>
-                    <td>
-                        ${dto.buyerPhone}
-                    </td>
-                    <td>
-                        ${dto.buyerAddress}
-                    </td>
-                    <td>
-                        ${dto.orderAmount}
-                    </td>
-                    <td>
-                        ${enumFunction(dto.orderStatus,"OrderStatusEnum")}
-                    </td>
-                    <td>
-                        ${dto.orderId}
-                    </td>
-                    <td>
-                        ${enumFunction(dto.payStatus,"PayStatusEnum")}
-                    </td>
-                    <td>
-                        ${dto.createTime,dateFormat="yyyy-MM-dd HH:mm:ss" }
-                    </td>
-                    <td>
-                        <a href="/sell/seller/order/detail?orderId=${dto.orderId}">详情</a>
-                    </td>
-                    <td>
-                        @if(enumFunction(dto.orderStatus,"OrderStatusEnum") != "取消"){
-                        <a href="/sell/seller/order/cancel?orderId=${dto.orderId}">取消</a>
                         @}
-                    </td>
-                </tr>
-                @}
-                @}
-                </tbody>
-            </table>
-            <ul class="pagination pull-right">
-                @if(page != 1){
-                <li><a href="http://localhost:8080/sell/seller/order/list?page=${page-1}&size=${size}">上一页</a></li>
-                @}
-                @for(var i = 1 ;i<=pageT;i++){
-                <li><a href="http://localhost:8080/sell/seller/order/list?page=${i}&size=${size}">${i}</a></li>
-                @}
-                @if(page != pageT){
-                <li><a href="http://localhost:8080/sell/seller/order/list?page=${page+1}&size=${size}">下一页</a></li>
-                @}
-            </ul>
+                        </tbody>
+                    </table>
+                    <ul class="pagination pull-right">
+                        @if(page != 1){
+                        @}
+                        @for(var i = 1 ;i<=pageT;i++){
+                        <li><a href="http://liuc.natapp1.cc/sell/seller/order/list?page=${i}&size=${size}">${i}</a></li>
+                        @}
+                        @if(page != pageT){
+                        <li><a href="http://liuc.natapp1.cc/sell/seller/order/list?page=${page+1}&size=${size}">下一页</a></li>
+                        @}
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
 
 </body>
 </html>

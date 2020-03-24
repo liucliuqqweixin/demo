@@ -1,16 +1,18 @@
 package com.imooc.sell.common.exception;
 
 import com.imooc.sell.enums.LEnum;
-import io.swagger.models.auth.In;
+import com.imooc.sell.mapper.OrderDetailMapper;
+import com.imooc.sell.mapper.OrderMasterMapper;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Data
 public class BaseException extends RuntimeException{
     protected Integer code;
-    @org.springframework.beans.factory.annotation.Autowired
-    private com.imooc.sell.mapper.OrderDetailMapper orderDetailMapper;
-    @org.springframework.beans.factory.annotation.Autowired
-    private com.imooc.sell.mapper.OrderMasterMapper orderMasterMapper;
+    @Autowired
+    private OrderDetailMapper orderDetailMapper;
+    @Autowired
+    private OrderMasterMapper orderMasterMapper;
 
     public BaseException(String message, Integer code) {
         super(message);

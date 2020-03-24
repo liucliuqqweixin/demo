@@ -13,6 +13,7 @@ import com.imooc.sell.service.BuyerService;
 import com.imooc.sell.service.IOrderService;
 import com.imooc.sell.util.ResultUtil;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
@@ -49,6 +50,7 @@ public class OrderController {
 
     //创建订单
     @PostMapping(value = "/create")
+    @ApiOperation("创建订单接口")
     public Result create(@Validated OrderForm orderForm, BindingResult bindingResult) {
         OrderDTO orderDTO = OrderForm2OrderDTOConverter.convert(orderForm);
         if (CollectionUtils.isEmpty(orderDTO.getOrderDetailList())) {

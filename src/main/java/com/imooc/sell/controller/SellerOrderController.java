@@ -1,24 +1,39 @@
 package com.imooc.sell.controller;
 
 
+import com.alibaba.excel.support.ExcelTypeEnum;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.imooc.sell.common.VO.Result;
 import com.imooc.sell.common.exception.ServiceException;
 import com.imooc.sell.dto.OrderDTO;
+import com.imooc.sell.entity.OrderDetail;
+import com.imooc.sell.entity.OrderDetailExcel;
 import com.imooc.sell.entity.ProductInfo;
 import com.imooc.sell.entity.SellerInfo;
 import com.imooc.sell.enums.ConstantEnum;
 import com.imooc.sell.enums.ResultEnum;
 import com.imooc.sell.service.IOrderService;
+import com.imooc.sell.util.ExcelUtil;
+import com.imooc.sell.util.ResponseUtil;
+import com.imooc.sell.util.ResultUtil;
+import com.lly835.bestpay.rest.type.Get;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.lang.String;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -121,5 +136,33 @@ public class SellerOrderController {
         model.addAttribute("msg", ResultEnum.ORDER_FINISH_SUCCESS.getMsg());
         model.addAttribute("url", "/sell/seller/order/list");
         return "common/success";
+    }
+
+    @GetMapping("/eportExcel")
+    @ResponseBody
+    public void eportExcel(HttpServletResponse response) throws IOException {
+        ServletOutputStream servletOutputStream = ResponseUtil.getServletOutputStream(response);
+        List<OrderDetail> orderDetails = iOrderService.list();
+        List<OrderDetailExcel> orderDetailExcels = new ArrayList<>();
+        orderDetails.forEach(o -> {
+            OrderDetailExcel orderDetailExcel = new OrderDetailExcel();
+            BeanUtils.copyProperties(o, orderDetailExcel);
+            orderDetailExcels.add(orderDetailExcel);
+        });
+        ExcelUtil.writeExcelWithModel(servletOutputStream, orderDetailExcels, OrderDetailExcel.class, ExcelTypeEnum.XLSX);
+    }
+
+    @PostMapping("/readNoEntity")
+    @ResponseBody
+    public Result noEntity(@RequestParam("file") MultipartFile excelFile) throws IOException {
+        List<OrderDetailExcel> orderDetailExcels = ExcelUtil.readExcelWithModel(excelFile.getInputStream(), OrderDetailExcel.class, ExcelTypeEnum.XLSX);
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        orderDetailExcels.forEach(o -> {
+            OrderDetail orderDetail = new OrderDetail();
+            BeanUtils.copyProperties(o, orderDetail);
+            orderDetails.add(orderDetail);
+        });
+        iOrderService.saveBatch(orderDetails);
+        return ResultUtil.success();
     }
 }

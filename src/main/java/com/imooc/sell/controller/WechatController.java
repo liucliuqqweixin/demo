@@ -1,6 +1,7 @@
 package com.imooc.sell.controller;
 
 import com.imooc.sell.common.exception.ServiceException;
+import com.imooc.sell.config.ProjectUrl;
 import com.imooc.sell.enums.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
@@ -22,10 +23,15 @@ import java.net.URLEncoder;
 public class WechatController {
     @Autowired
     private WxMpService wxMpService;
+    @Autowired
+    private WxMpService wxOpenService;
+
+    @Autowired
+    private ProjectUrl projectUrl;
 
     @GetMapping("/authorize")
     public String authorize(@RequestParam("returnUrl") String returnUrl) {
-        String url = "http://liuc.natapp1.cc/sell/wechat/userInfo";
+        String url = projectUrl.getWechatMpAuthorize() + "/sell/wechat/userInfo";
         String redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAUTH2_SCOPE_USER_INFO, URLEncoder.encode(returnUrl));
         log.info("【微信网页授权】获取code：{}", redirectUrl);
         return "redirect:" + redirectUrl;
@@ -33,8 +39,6 @@ public class WechatController {
 
     @GetMapping("/userInfo")
     public String userInfo(@RequestParam("code") String code, @RequestParam("state") String returnUrl) {
-        System.out.println(code);
-        System.out.println(returnUrl);
         WxMpOAuth2AccessToken accessToken = new WxMpOAuth2AccessToken();
         try {
             accessToken = wxMpService.oauth2getAccessToken(code);
@@ -45,4 +49,29 @@ public class WechatController {
         String openId = accessToken.getOpenId();
         return "redirect:" + returnUrl + "?openid=oTgZpwUYcj3qUXDoCM0ObMLHtduY";
     }
+
+    @GetMapping("/qrAuthorize")
+    public String qrAuthorize(@RequestParam("returnUrl") String returnUrl) {
+        String url = projectUrl.getWechatOpenAuthorize() + "/sell/qr/oTgZpwUYcj3qUXDoCM0ObMLHtduY";
+        String redirectUrl = wxOpenService.buildQrConnectUrl(url, WxConsts.QRCONNECT_SCOPE_SNSAPI_LOGIN, URLEncoder.encode(returnUrl));
+        log.info("【微信网页登陆】获取code：{}", redirectUrl);
+        return "redirect:" + redirectUrl;
+    }
+//, @RequestParam("state") String returnUrl
+    @GetMapping("/qrUserInfo")
+    public String qrUserInfo(@RequestParam("code") String code) {
+        WxMpOAuth2AccessToken accessToken = new WxMpOAuth2AccessToken();
+        try {
+            accessToken = wxOpenService.oauth2getAccessToken(code);
+        } catch (WxErrorException e) {
+            e.printStackTrace();
+            throw new ServiceException(ResultEnum.WECHAT_MP_ERROR);
+        }
+        String openId = accessToken.getOpenId();
+        String redirectUrl = "http://liuc.natapp1.cc/sell/seller/login";
+        return "redirect:" +redirectUrl+ "?openid="+openId;
+
+    }
+
+    
 }

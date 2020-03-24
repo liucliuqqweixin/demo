@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2019-11-10
  */
 public interface ISellerInfoService extends IService<SellerInfo> {
-
+    SellerInfo findSellerByOpenid(String openid);
 }

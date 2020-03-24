@@ -6,6 +6,7 @@ import com.imooc.sell.enums.ResultEnum;
 import com.imooc.sell.service.IOrderService;
 import com.imooc.sell.service.PayService;
 import com.lly835.bestpay.model.PayResponse;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("pay")
+@Api(tags = "支付接口")
 public class PayController {
     @Autowired
     private IOrderService iOrderService;
@@ -28,12 +30,14 @@ public class PayController {
             throw new ServiceException(ResultEnum.ORDER_NOT_EXIST);
         }
         PayResponse payResponse = payService.create(orderDTO);
-        model.addAttribute("orderId",orderId);
+        model.addAttribute("orderId", orderId);
         model.addAttribute("rs", payResponse);
         return "pay/create";
     }
+
     /**
      * 微信异步通知
+     *
      * @param notifyData
      */
     @PostMapping("/notify")

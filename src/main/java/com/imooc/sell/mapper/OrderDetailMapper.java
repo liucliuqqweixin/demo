@@ -15,6 +15,7 @@ import java.util.List;
  * @since 2019-11-10
  */
 public interface OrderDetailMapper extends BaseMapper<OrderDetail> {
+    List<OrderDetail> getList();
 
     Integer insertBatch(@Param("orderDetailList") List<OrderDetail> orderDetailList);
 }

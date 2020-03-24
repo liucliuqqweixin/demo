@@ -13,4 +13,7 @@
             ,#{orderDetailList.createTime} )
         </foreach>
     </insert>
+    <select id="getList" resultType="com.imooc.sell.entity.OrderDetail">
+        select * from order_detail
+    </select>
 </mapper>

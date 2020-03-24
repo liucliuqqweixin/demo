@@ -5,6 +5,7 @@ import com.imooc.sell.dto.CartDTO;
 import com.imooc.sell.entity.ProductInfo;
 import com.imooc.sell.enums.ConstantEnum;
 import com.imooc.sell.enums.ResultEnum;
+import com.imooc.sell.enums.StateEnum;
 import com.imooc.sell.mapper.ProductInfoMapper;
 import com.imooc.sell.service.IProductInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -66,5 +67,19 @@ public class ProductInfoServiceImpl extends ServiceImpl<ProductInfoMapper, Produ
                 throw new ServiceException(ResultEnum.UPDATE_ERROR);
             }
         });
+    }
+
+    @Override
+    public void onSale(String productId) {
+        ProductInfo productInfo = checkProductInfoById(productId);
+        productInfo.setProductStatus(StateEnum.NORMAL);
+        this.updateById(productInfo);
+    }
+
+    @Override
+    public void offSale(String productId) {
+        ProductInfo productInfo = checkProductInfoById(productId);
+        productInfo.setProductStatus(StateEnum.OBTAINED);
+        this.updateById(productInfo);
     }
 }

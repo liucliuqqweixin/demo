@@ -1,15 +1,19 @@
 package com.imooc.sell.common.form;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 
 @Data
+@ApiModel("订单信息")
 public class OrderForm {
     /**
      * 买家姓名
      */
     @NotEmpty(message = "姓名必填")
+    @ApiModelProperty("买家姓名")
     private String name;
 
     /**

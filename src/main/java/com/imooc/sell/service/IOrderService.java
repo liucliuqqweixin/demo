@@ -7,6 +7,7 @@ import com.imooc.sell.common.form.OrderDetailForm;
 import com.imooc.sell.dto.OrderDTO;
 import com.imooc.sell.entity.OrderDetail;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.imooc.sell.entity.SellerInfo;
 
 /**
  * <p>
@@ -16,7 +17,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author liuc
  * @since 2019-11-10
  */
-public interface IOrderService {
+public interface IOrderService extends IService<OrderDetail>{
 
     /**
      * 创建订单

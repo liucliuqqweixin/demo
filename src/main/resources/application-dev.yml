@@ -2,12 +2,31 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     #    url: jdbc:mysql://192.168.198.129:3306/demo?characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false&useSSL=true
-    url: jdbc:p6spy:mysql://192.168.198.130:3306/sell?characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false&useSSL=true&serverTimezone=Asia/Shanghai
+    url: jdbc:p6spy:mysql://192.168.1.5:3306/sell?characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false&useSSL=true&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+  redis:
+    host: 192.168.198.133
+    database: 0
+    port: 6379
+    password:
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
+    timeout: 3000ms
+redis:
+  key:
+    prefix:
+      authCode: "sell"
+    expire:
+      authCode: 120
 #  jackson:
 #    default-property-inclusion: non_null
+
 mybatis-plus:
   global-config:
     db-config:
@@ -20,14 +39,37 @@ server:
   servlet:
     context-path: /sell
 wechat:
-#  mpAppId: wx480cb6252eb12fb3
-  mpAppId: wxd898fcb01713c658
+  mpAppId: wx480cb6252eb12fb3
+  #  mpAppId: wxd898fcb01713c658
   mpAppSecret: 9b848bb6a4fab51e36136db9110b0823
+  openAppId: wx6ad144e54af67d87
+  openAppSecret: 91a2ff6d38a2bbccfb7e9f9079108e2e
   mchId: 1483469312
   mchKey: 098F6BCD4621D373CADE4E832627B4F6
   keyPath: E:\github\own\demo\src\main\resources\templates\h5.p12
   notifyUrl: http://liuc.natapp1.cc/sell/pay/notify
+  templateId:
+    orderStatus: 2D2HY22Hhb5cpB6iSzUDqCYO5dMlymqDPklVx9oQXlU
 beetl:
   templatesPath: /web
 beetlsql:
   enabled: false
+projectUrl:
+  wechatMpAuthorize: http://liuc.natapp1.cc
+  wechatOpenAuthorize: http://sell.springboot.cn
+  sell: http://liuc.natapp1.cc
+
+
+# 项目信息配置
+project:
+  name: sell
+  version: 1.0.0
+  env: development
+# Swagger配置
+swagger:
+  host:
+  title: ${project.name}接口文档
+  description: ${project.name}接口文档
+  enabled: true
+  # 禁用swagger时的重定向地址
+  redirect-uri: /
